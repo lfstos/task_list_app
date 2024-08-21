@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Owners</h1>
+  <ul>
+    {% for owner in owners %}
+      <li>{{ owner.name }} - Has Cars: {{ owner.has_cars }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'owner_create' %}">Create Owner</a>
+{% endblock %}
+
+<!-- cars/templates/cars/owner_create.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Owner</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <button type="submit">Create</button>
+  </form>
+{% endblock %}
+
+<!-- cars/templates/cars/car_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Cars</h1>
+  <ul>
+    {% for car in cars %}
+      <li>Color: {{ car.color }}, Model: {{ car.model }}, Owner: {{ car.owner.name }}</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'car_create' %}">Create Car</a>
+{% endblock %}
+
+<!-- cars/templates/cars/car_create.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Create Car</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="color">Color:</label>
+    <select id="color" name="color">
+      {% for color, label in car.COLOR_CHOICES %}
+        <option value="{{ color }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+    <label for="model">Model:</label>
+    <select id="model" name="model">
+      {% for model, label in car.MODEL_CHOICES %}
+        <option value="{{ model }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+    <label for="owner">Owner:</label>
+    <select id="owner" name="owner">
+      {% for owner in owners %}
+        <option value="{{ owner.id }}">{{ owner.name }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Create</button>
+  </form>
+{% endblock %}

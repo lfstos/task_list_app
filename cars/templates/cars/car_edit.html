@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Car</h1>
+  <form method="post">
+    {% csrf_token %}
+    <label for="color">Color:</label>
+    <select id="color" name="color">
+      {% for color, label in car.COLOR_CHOICES %}
+        <option value="{{ color }}" {% if car.color == color %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <label for="model">Model:</label>
+    <select id="model" name="model">
+      {% for model, label in car.MODEL_CHOICES %}
+        <option value="{{ model }}" {% if car.model == model %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+    <label for="owner">Owner:</label>
+    <select id="owner" name="owner">
+      {% for owner in owners %}
+        <option value="{{ owner.id }}" {% if car.owner == owner %}selected{% endif %}>{{ owner.name }}</option>
